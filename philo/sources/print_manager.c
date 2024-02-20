@@ -6,11 +6,11 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 09:57:17 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:04:19 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	ft_check_error(t_data *data, int ac, int *errors)
 {

@@ -6,11 +6,11 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:44:14 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 09:57:43 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:03:54 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	ft_print_action(t_data *data, char *action, int i);
 int	ft_complete_av(int ac, char **av);

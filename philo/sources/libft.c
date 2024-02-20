@@ -6,11 +6,11 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 01:02:27 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 09:46:52 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:03:59 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 void	*ft_calloc(size_t c, size_t l)
 {

@@ -6,11 +6,11 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:15:09 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 09:28:38 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:04:04 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	ft_print_error(t_data *data, int ac, char **av);
 
