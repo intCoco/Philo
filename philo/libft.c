@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 01:02:27 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/19 17:49:46 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 09:46:52 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ void	*ft_calloc(size_t c, size_t l)
 	while (++i < c * l)
 		*(unsigned char *)(s + i) = 0;
 	return (s);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t l)
+{
+	size_t	i;
+
+	i = 0;
+	if (l <= 0)
+		return (0);
+	while (((unsigned char *)s1)[i] == ((unsigned char *)s2)[i]
+		&& ((unsigned char *)s1)[i] && ((unsigned char *)s2)[i] && i < l - 1)
+		i++;
+	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 }
 
 void	ft_bzero(void *s, size_t len)

@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:15:09 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/18 22:19:28 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 09:28:38 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_init_philo(t_data *data)
 
 int	ft_init(t_data *data, int ac, char **av)
 {
+	data->running = 1;
 	data->nb_philo = ft_ph_atoi(av[1]);
 	data->time_to_die = ft_ph_atoi(av[2]);
 	data->time_to_eat = ft_ph_atoi(av[3]);

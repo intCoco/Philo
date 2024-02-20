@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 20:39:29 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 08:53:04 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 09:47:00 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	bool			running;
 	int				nb_philo;
 	int				nb_meal;
 	int				time_to_sleep;
@@ -68,5 +69,6 @@ void		*ft_calloc(size_t c, size_t l);
 long long	ft_timestamp(void);
 void		ft_usleep(int time_to_wait);
 void		ft_free(t_data *data);
+int			ft_strncmp(const char *s1, const char *s2, size_t l);
 
 #endif

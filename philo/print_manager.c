@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/19 18:16:51 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/20 09:57:17 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ int	ft_print_error(t_data *data, int ac, char **av)
 	return (0);
 }
 
-void	ft_print_action(t_data *data, char *action, int i)
+int	ft_print_action(t_data *data, char *action, int i)
 {
 	pthread_mutex_lock(&data->speech);
 	printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp() - data->start,
 		RESET, BOLD, i + 1, RESET, action);
 	pthread_mutex_unlock(&data->speech);
+	return (data->time_to_sleep);
 }
 
 int	ft_complete_av(int ac, char **av)
@@ -84,25 +85,13 @@ int	ft_complete_av(int ac, char **av)
 	while (ac < 5)
 	{
 		if (ac == 1)
-		{
-			// av[ac] = ft_calloc(23, sizeof(char));
 			av[ac] = "[number_of_philosophers]";
-		}
 		if (ac == 2)
-		{
-			// av[ac] = ft_calloc(12, sizeof(char));
 			av[ac] = "[time_to_die]";
-		}
 		if (ac == 3)
-		{
-			// av[ac] = ft_calloc(12, sizeof(char));
 			av[ac] = "[time_to_eat]";
-		}
 		if (ac == 4)
-		{
-			// av[ac] = ft_calloc(14, sizeof(char));
 			av[ac] = "[time_to_sleep]";
-		}
 		ac++;
 	}
 	return (ac);
