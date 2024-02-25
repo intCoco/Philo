@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:14:34 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 16:30:23 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:03:20 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,26 @@ int	ft_progression_checker(t_data *data)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	pthread_mutex_lock(&data->lock3);
-	while (i < data->nb_philo)
+	while (++i <= data->nb_philo)
 	{
-		if ((ft_timestamp() - data->start)
-			- data->philo[i].last_meal > data->time_to_die)
+		if ((ft_timestamp() - data->start) - data->philo[i].last_meal \
+			> data->time_to_die || i == data->nb_philo)
 		{
 			pthread_mutex_lock(&data->lock);
 			data->running = 0;
 			pthread_mutex_unlock(&data->lock);
-			ft_print_action(data, DIE, i);
-			break ;
+			if(i < data->nb_philo)
+				ft_print_action(data, DIE, i);
+			pthread_mutex_unlock(&data->lock3);
+			return (FALSE);
 		}
 		if (data->philo[i].nb_ate <= data->nb_meal || data->nb_meal == -1)
-		{
-			pthread_mutex_unlock(&data->lock3);
-			return (TRUE);
-		}
-		i++;
+			break ;
 	}
 	pthread_mutex_unlock(&data->lock3);
-	return (FALSE);
+	return (TRUE);
 }
 
 int	ft_running_checker(t_data *data)
