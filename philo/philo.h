@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 20:39:29 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 14:57:50 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:31:55 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ void		ft_print_action(t_data *data, char *action, int i);
 int			ft_complete_av(int ac, char **av);
 int			ft_init(t_data *data, int ac, char **av);
 int			ft_progression_checker(t_data *data);
+int			ft_print_error(t_data *data, int ac, char **av);
+int			ft_check_error(t_data *data, int ac, int *errors);
 
 #endif

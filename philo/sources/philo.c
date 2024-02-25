@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:44:14 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 14:56:55 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:33:05 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@ int	ft_fork_picking(t_data *data, int pid)
 
 void	ft_eat(t_data *data, int pid)
 {
-	if (data->nb_philo == 1)
-	{
-		ft_print_action(data, FORK, pid);
-		ft_usleep(data->time_to_die + 10);
-		return ;
-	}
 	if (!ft_fork_picking(data, pid))
 		return ;
 	ft_print_action(data, EAT, pid);
@@ -87,6 +81,15 @@ void	ft_philo(t_data *data)
 	pthread_detach(pthread_self());
 }
 
+void	handle_single_philo_life(t_data data)
+{
+	printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp()
+		- data.start, RESET, BOLD, 1, RESET, FORK);
+	ft_usleep(data.time_to_die);
+	printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp()
+		- data.start, RESET, BOLD, 1, RESET, DIE);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -97,12 +100,17 @@ int	main(int ac, char **av)
 	ft_bzero(&data, sizeof(t_data));
 	if (ft_init(&data, ac, av) == 0)
 	{
-		while (++i < data.nb_philo)
-			if (pthread_create(&data.philo[i].thread, NULL, (void *)ft_philo,
-					&data))
-				return (printf("Threads creation went wrong\n"));
-		while (ft_progression_checker(&data) == TRUE)
-			usleep(1);
+		if (ft_ph_atoi(av[1]) == 1)
+			handle_single_philo_life(data);
+		else
+		{
+			while (++i < data.nb_philo)
+				if (pthread_create(&data.philo[i].thread, NULL, \
+					(void *)ft_philo, &data))
+					return (printf("Threads creation went wrong\n"));
+			while (ft_progression_checker(&data) == TRUE)
+				usleep(1);
+		}
 		ft_free(&data);
 		return (0);
 	}

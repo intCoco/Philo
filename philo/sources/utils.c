@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:14:34 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 14:57:34 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:02:37 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	ft_progression_checker(t_data *data)
 		}
 		i++;
 	}
+	pthread_mutex_unlock(&data->lock3);
 	pthread_mutex_lock(&data->lock);
 	data->running = 0;
 	pthread_mutex_unlock(&data->lock);
-	pthread_mutex_unlock(&data->lock3);
 	return (FALSE);
 }
 

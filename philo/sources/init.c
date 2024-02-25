@@ -6,13 +6,48 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:15:09 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/21 01:28:41 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:28:58 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	ft_print_error(t_data *data, int ac, char **av);
+int	ft_check_error(t_data *data, int ac, int *errors)
+{
+	if (data->nb_philo <= 0 || data->time_to_die <= 0 || data->time_to_eat <= 0
+		|| data->time_to_sleep <= 0 || (ac == 6 && data->nb_meal <= 0))
+	{
+		if (data->nb_philo <= 0)
+			errors[0] = 1;
+		if (data->time_to_die <= 0)
+			errors[1] = 1;
+		if (data->time_to_eat <= 0)
+			errors[2] = 1;
+		if (data->time_to_sleep <= 0)
+			errors[3] = 1;
+		if (ac == 6 && data->nb_meal <= 0)
+			errors[4] = 1;
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_complete_av(int ac, char **av)
+{
+	while (ac < 5)
+	{
+		if (ac == 1)
+			av[ac] = "[number_of_philosophers]";
+		if (ac == 2)
+			av[ac] = "[time_to_die]";
+		if (ac == 3)
+			av[ac] = "[time_to_eat]";
+		if (ac == 4)
+			av[ac] = "[time_to_sleep]";
+		ac++;
+	}
+	return (ac);
+}
 
 void	ft_init_philo(t_data *data)
 {
