@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 14:24:37 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:41:15 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,15 @@ int	ft_print_error(t_data *data, int ac, char **av)
 
 int	ft_running_checker(t_data *data);
 
-int	ft_print_action(t_data *data, char *action, int i)
+void	ft_print_action(t_data *data, char *action, int i)
 {
 	if(ft_running_checker(data))
-	{pthread_mutex_lock(&data->speech);
-	printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp() - data->start,
-		RESET, BOLD, i + 1, RESET, action);
-	pthread_mutex_unlock(&data->speech);}
-	return (data->time_to_sleep);
+	{
+		pthread_mutex_lock(&data->speech);
+		printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp() \
+			- data->start, RESET, BOLD, i + 1, RESET, action);
+		pthread_mutex_unlock(&data->speech);
+	}
 }
 
 int	ft_complete_av(int ac, char **av)
