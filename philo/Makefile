@@ -6,31 +6,69 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/02/25 14:58:08 by chuchard         ###   ########.fr        #
+#    Updated: 2024/02/25 15:55:45 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+# Colors constants
+PURPLE			= \033[38;5;141m
+GREEN			= \033[38;5;46m
+RED				= \033[0;31m
+GREY			= \033[38;5;240m
+RESET			= \033[0m
+BOLD			= \033[1m
+CLEAR			= \r\033[K
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
+# Executable and compilation
+NAME			= philo
 
-RM = rm -rf
+SRC_DIR			= ./sources/
+SRCS			= 	libft.c	\
+					init.c	\
+					print_manager.c	\
+					utils.c	\
+					philo.c
 
-SRCS = 	sources/libft.c	\
-		sources/init.c	\
-		sources/print_manager.c	\
-		sources/utils.c	\
-		sources/philo.c
+OBJ_DIR			= ./objs/
+OBJS			= ${addprefix ${OBJ_DIR}, ${SRCS:.c=.o}}
 
-$(NAME) :
-	gcc $(FLAGS) $(SRCS) -o $(NAME)
+CC				= gcc
+CFLAGS			= -Wall -Wextra -Werror
+RM				= rm -rf
 
-all : $(NAME)
+ifdef DEBUG
+	CFLAGS += -fsanitize=thread
+endif
 
-fclean : clean
+${OBJ_DIR}%.o:	${SRC_DIR}%.c
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Compiling ${GREEN}%s${RESET}...${GREY}" ${notdir $<}
+	@${CC} ${CFLAGS} -I${SRC_DIR} -c $< -o $@
 
+all: 			$(NAME)
 
-clean :
-	$(RM) $(NAME)
+$(NAME): 		$(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -pthread -o $(NAME)
+	@clear
+	@printf "${CLEAR}${RESET}${GREY}────────────────────────────────────────────────────────────────────────────\n${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: ${RED}${BOLD}${NAME} ${RESET}compiled ${GREEN}successfully${RESET}.${GREY}\n${RESET}${GREY}────────────────────────────────────────────────────────────────────────────\n${RESET}"
 
-re : fclean all
+${OBJS}:		| ${OBJ_DIR}
+
+${OBJ_DIR}:
+	@mkdir ${OBJ_DIR}
+
+debug:
+	@make DEBUG=1 re
+	@printf "${RESET}${RED}${BOLD}Compilation done with data race detection${RESET}\n"
+
+clean:
+	@${RM} ${OBJ_DIR}
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Objects were cleaned ${GREEN}successfully${RESET}.\n${RESET}"
+
+fclean: 		clean
+	@${RM} ${NAME}
+	@printf "${CLEAR}${RESET}${GREY}────────────────────────────────────────────────────────────────────────────\n${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Project cleaned ${GREEN}successfully${RESET}.${GREY}\n${RESET}${GREY}────────────────────────────────────────────────────────────────────────────\n${RESET}"
+
+re: fclean all
+
+.SILENT: all clean fclean re debug
+.PHONY: all clean fclean re debug
