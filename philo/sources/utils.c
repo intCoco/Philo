@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:14:34 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 10:04:24 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:32:52 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ void	ft_free(t_data *data)
 	int	i;
 
 	i = 0;
-	free(data->philo);
 	pthread_mutex_destroy(&data->speech);
 	pthread_mutex_destroy(&data->lock);
 	pthread_mutex_destroy(&data->lock2);
+	pthread_mutex_destroy(&data->lock3);
 	while (i < data->nb_philo)
 	{
 		pthread_mutex_destroy(&data->philo[i].l_fork);
 		i++;
 	}
+	free(data->philo);
 }

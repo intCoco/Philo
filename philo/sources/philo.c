@@ -6,41 +6,94 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:44:14 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 10:03:54 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:25:24 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	ft_print_action(t_data *data, char *action, int i);
-int	ft_complete_av(int ac, char **av);
-int	ft_init(t_data *data, int ac, char **av);
+int		ft_print_action(t_data *data, char *action, int i);
+int		ft_complete_av(int ac, char **av);
+int		ft_init(t_data *data, int ac, char **av);
 
 int	ft_progression_checker(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&data->lock2);
+	pthread_mutex_lock(&data->lock3);
 	while (i < data->nb_philo)
 	{
 		if ((ft_timestamp() - data->start)
 			- data->philo[i].last_meal > data->time_to_die)
 		{
 			ft_print_action(data, DIE, i);
-			data->running = 0;
 			break ;
 		}
 		if (data->philo[i].nb_ate <= data->nb_meal || data->nb_meal == -1)
 		{
-			pthread_mutex_unlock(&data->lock2);
+			pthread_mutex_unlock(&data->lock3);
 			return (TRUE);
 		}
-		ft_usleep(1);
 		i++;
 	}
-	pthread_mutex_unlock(&data->lock2);
+	pthread_mutex_lock(&data->lock);
+	data->running = 0;
+	pthread_mutex_unlock(&data->lock);
+	pthread_mutex_unlock(&data->lock3);
 	return (FALSE);
+}
+
+int	ft_running_checker(t_data *data)
+{
+	pthread_mutex_lock(&data->lock);
+	if (data->running == 0)
+	{
+		pthread_mutex_unlock(&data->lock);
+		return (0);
+	}
+	pthread_mutex_unlock(&data->lock);
+	return (1);
+}
+
+void	ft_eat(t_data *data, int pid)
+{
+	if (data->nb_philo == 1)
+	{
+		ft_print_action(data, FORK, pid);
+		ft_usleep(data->time_to_die + 10);
+		return ;
+	}
+	if (pid % 2)
+		pthread_mutex_lock(&data->philo[pid].l_fork);
+	else
+		pthread_mutex_lock(data->philo[pid].r_fork);
+	ft_print_action(data, FORK, pid);
+	if (pid % 2)
+	{
+		if (pthread_mutex_lock(data->philo[pid].r_fork) != 0)
+		{
+			pthread_mutex_unlock(&data->philo[pid].l_fork);
+			ft_eat(data, pid);
+		}
+	}
+	else
+	{
+		if (pthread_mutex_lock(&data->philo[pid].l_fork) != 0)
+		{
+			pthread_mutex_unlock(data->philo[pid].r_fork);
+			ft_eat(data, pid);
+		}
+	}
+	ft_print_action(data, FORK, pid);
+	ft_print_action(data, EAT, pid);
+	pthread_mutex_lock(&data->lock3);
+	data->philo[pid].last_meal = ft_timestamp() - data->start;
+	data->philo[pid].nb_ate++;
+	pthread_mutex_unlock(&data->lock3);
+	ft_usleep(data->time_to_eat);
+	pthread_mutex_unlock(&data->philo[pid].l_fork);
+	pthread_mutex_unlock(data->philo[pid].r_fork);
 }
 
 void	ft_philo(t_data *data)
@@ -48,28 +101,33 @@ void	ft_philo(t_data *data)
 	static int	i;
 	int			pid;
 
+	pthread_mutex_lock(&data->lock2);
 	pid = i++;
+	pthread_mutex_unlock(&data->lock2);
 	if (pid % 2)
 		ft_usleep(60);
 	while (1)
 	{
-		pthread_mutex_lock(&data->philo[pid].l_fork);
-		ft_print_action(data, FORK, pid);
-		pthread_mutex_lock(data->philo[pid].r_fork);
-		ft_print_action(data, FORK, pid);
-		ft_print_action(data, EAT, pid);
-		ft_usleep(data->time_to_eat);
-		if (data->running == 0)
+		ft_eat(data, pid);
+		if (ft_running_checker(data) == 0)
+		{
+			pthread_mutex_lock(&data->lock2);
+			data->ended++;
+			pthread_mutex_unlock(&data->lock2);
 			break ;
-		pthread_mutex_lock(&data->lock);
-		data->philo[pid].last_meal = ft_timestamp() - data->start;
-		data->philo[pid].nb_ate++;
-		pthread_mutex_unlock(&data->lock);
-		pthread_mutex_unlock(&data->philo[pid].l_fork);
-		pthread_mutex_unlock(data->philo[pid].r_fork);
+		}
 		ft_usleep(ft_print_action(data, SLEEP, pid));
+		if (ft_running_checker(data) == 0)
+		{
+			pthread_mutex_lock(&data->lock2);
+			data->ended++;
+			pthread_mutex_unlock(&data->lock2);
+			break ;
+		}
 		ft_print_action(data, THINK, pid);
+		ft_usleep(data->time_to_sleep);
 	}
+	pthread_detach(pthread_self());
 }
 
 int	main(int ac, char **av)
@@ -87,7 +145,19 @@ int	main(int ac, char **av)
 					&data))
 				return (printf("Threads creation went wrong\n"));
 		while (ft_progression_checker(&data) == TRUE)
+			usleep(100);
+		while (data.nb_philo > 1)
+		{
+			pthread_mutex_lock(&data.lock2);
+			if (data.ended == data.nb_philo)
+			{
+				pthread_mutex_unlock(&data.lock2);
+				break ;
+			}
+			pthread_mutex_unlock(&data.lock2);
 			usleep(1);
+			// printf("%i %i\n", data.ended, data.nb_philo);
+		}
 		ft_free(&data);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 20:39:29 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 09:47:00 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:46:00 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	bool			running;
+	int				ended;
 	int				nb_philo;
 	int				nb_meal;
 	int				time_to_sleep;
@@ -61,6 +62,7 @@ typedef struct s_data
 	pthread_mutex_t	speech;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	lock2;
+	pthread_mutex_t	lock3;
 }					t_data;
 
 void		ft_bzero(void *s, size_t len);

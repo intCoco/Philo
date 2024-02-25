@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:15:09 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 10:04:04 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/21 01:28:41 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	ft_init(t_data *data, int ac, char **av)
 	pthread_mutex_init(&data->speech, 0);
 	pthread_mutex_init(&data->lock, 0);
 	pthread_mutex_init(&data->lock2, 0);
+	pthread_mutex_init(&data->lock3, 0);
 	ft_init_philo(data);
 	return (0);
 }
