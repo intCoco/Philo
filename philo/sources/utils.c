@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:14:34 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 15:02:37 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:30:23 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ int	ft_progression_checker(t_data *data)
 		if ((ft_timestamp() - data->start)
 			- data->philo[i].last_meal > data->time_to_die)
 		{
+			pthread_mutex_lock(&data->lock);
+			data->running = 0;
+			pthread_mutex_unlock(&data->lock);
 			ft_print_action(data, DIE, i);
 			break ;
 		}
@@ -80,9 +83,6 @@ int	ft_progression_checker(t_data *data)
 		i++;
 	}
 	pthread_mutex_unlock(&data->lock3);
-	pthread_mutex_lock(&data->lock);
-	data->running = 0;
-	pthread_mutex_unlock(&data->lock);
 	return (FALSE);
 }
 

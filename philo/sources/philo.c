@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:44:14 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 15:44:34 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:08:54 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_philo(t_data *data)
 	pthread_mutex_unlock(&data->lock2);
 	if (pid % 2)
 		ft_usleep(60);
-	while (1)
+	while (ft_running_checker(data))
 	{
 		ft_eat(data, pid);
 		if (ft_running_checker(data) == 0)
