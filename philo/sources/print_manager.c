@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 14:41:15 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:54:46 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_print_error(t_data *data, int ac, char **av)
 		if (ac < 6)
 			printf("%s[number_of_times_each_philosopher_must_eat]%s",
 				ITALIC_TRAN, RESET);
-		printf("\n\n%sEvery arguments must be strictly positive numbers. " \
+		printf("\n\n%sEvery arguments must be strictly positive numbers. "
 			"Any other character will result in an error.%s\n", ITALIC, RESET);
 		free(errors);
 		return (1);
@@ -71,14 +71,12 @@ int	ft_print_error(t_data *data, int ac, char **av)
 	return (0);
 }
 
-int	ft_running_checker(t_data *data);
-
 void	ft_print_action(t_data *data, char *action, int i)
 {
-	if(ft_running_checker(data))
+	if (ft_running_checker(data))
 	{
 		pthread_mutex_lock(&data->speech);
-		printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp() \
+		printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp()
 			- data->start, RESET, BOLD, i + 1, RESET, action);
 		pthread_mutex_unlock(&data->speech);
 	}

@@ -6,13 +6,13 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/02/25 14:51:27 by chuchard         ###   ########.fr        #
+#    Updated: 2024/02/25 14:58:08 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-FLAGS = -Wall -Werror -Wextra #-g -fsanitize=thread
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
 
 RM = rm -rf
 

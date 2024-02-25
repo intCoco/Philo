@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 20:39:29 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:46:00 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:57:50 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,10 @@ long long	ft_timestamp(void);
 void		ft_usleep(int time_to_wait);
 void		ft_free(t_data *data);
 int			ft_strncmp(const char *s1, const char *s2, size_t l);
+int			ft_running_checker(t_data *data);
+void		ft_print_action(t_data *data, char *action, int i);
+int			ft_complete_av(int ac, char **av);
+int			ft_init(t_data *data, int ac, char **av);
+int			ft_progression_checker(t_data *data);
 
 #endif

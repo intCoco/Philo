@@ -6,55 +6,11 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:44:14 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 14:50:44 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:56:55 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-void	ft_print_action(t_data *data, char *action, int i);
-int		ft_complete_av(int ac, char **av);
-int		ft_init(t_data *data, int ac, char **av);
-
-int	ft_progression_checker(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(&data->lock3);
-	while (i < data->nb_philo)
-	{
-		if ((ft_timestamp() - data->start)
-			- data->philo[i].last_meal > data->time_to_die)
-		{
-			ft_print_action(data, DIE, i);
-			break ;
-		}
-		if (data->philo[i].nb_ate <= data->nb_meal || data->nb_meal == -1)
-		{
-			pthread_mutex_unlock(&data->lock3);
-			return (TRUE);
-		}
-		i++;
-	}
-	pthread_mutex_lock(&data->lock);
-	data->running = 0;
-	pthread_mutex_unlock(&data->lock);
-	pthread_mutex_unlock(&data->lock3);
-	return (FALSE);
-}
-
-int	ft_running_checker(t_data *data)
-{
-	pthread_mutex_lock(&data->lock);
-	if (data->running == 0)
-	{
-		pthread_mutex_unlock(&data->lock);
-		return (0);
-	}
-	pthread_mutex_unlock(&data->lock);
-	return (1);
-}
 
 int	ft_fork_picking(t_data *data, int pid)
 {
