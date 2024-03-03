@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:14:34 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/25 17:32:34 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/03 01:15:26 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_free(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->nb_philo > 1)
+	while (1)
 	{
 		pthread_mutex_lock(&data->lock2);
 		if (data->ended == data->nb_philo)
@@ -50,6 +50,7 @@ void	ft_free(t_data *data)
 	pthread_mutex_destroy(&data->lock3);
 	while (i < data->nb_philo)
 	{
+		pthread_detach(data->philo[i].thread);
 		pthread_mutex_destroy(&data->philo[i].l_fork);
 		i++;
 	}

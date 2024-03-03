@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 01:02:27 by chuchard          #+#    #+#             */
-/*   Updated: 2024/02/20 10:03:59 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/03 00:59:35 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,20 @@ void	ft_bzero(void *s, size_t len)
 int	ft_ph_atoi(const char *str)
 {
 	int	i;
-	int	nbint;
+	int	ret;
 
 	i = 0;
-	nbint = 0;
+	ret = 0;
 	if (str[0] == '-')
 		i++;
-	while ((str[i] >= '0') && (str[i] <= '9'))
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		nbint = nbint * 10 + ((char *)str)[i] - '0';
+		ret = ret * 10 + ((char *)str)[i] - '0';
 		i++;
 	}
 	if (str[i])
 		return (INV_CH);
 	if (str[0] == '-')
-		return (NEG_NB);
-	return (nbint);
+		return(NEG_NB);
+	return (ret);
 }
