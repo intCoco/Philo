@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/03 08:11:32 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/03 08:37:56 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ ${OBJ_DIR}%.o:	${SRC_DIR}%.c
 	@tput cuu 3
 
 all:			$(NAME)
-	@printf "${SEP}\
+	@printf "\
 ${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: ${GREEN}Welcome to my Philosophers project!${RESET}\n\n\
 ${BLUE}This program simulates the dining philosophers problem.${RESET}\n\n\
 To compile the program, use the command:\n\
@@ -86,18 +86,18 @@ clean:
         printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: ${RED}Clearing${RESET} %s...\n${SEP}" $${file}; \
 		sleep 0.1; \
 		tput cuu 3; \
-        rm -f $${file}; \
+        ${RM} $${file}; \
     done
 	@${RM} ${OBJ_DIR}
 	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: Objects cleaned ${GREEN}successfully${RESET}.\n${RESET}${SEP}"
 
 fclean: 		clean
-	@sleep 0.2
+	@tput cuu 1
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: ${RED}Clearing${RESET} executable...\n${SEP}"
 	@${RM} ${NAME}
-	@printf "${SEP}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: ${RED}Clearing${RESET} ${NAME}...\n${SEP}"
 	@sleep 0.2
-	@tput cuu 3
-	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: ${NAME} cleaned ${GREEN}successfully${RESET}.\n${RESET}${SEP}"
+	@tput cuu 2
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: Project cleaned ${GREEN}successfully${RESET}.\n${RESET}${SEP}"
 
 re: 			fclean all
 
