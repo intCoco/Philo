@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 20:39:29 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 01:05:19 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/03 08:09:25 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,21 @@
 
 # define TRUE			1
 # define FALSE			0
+
+# define INV_CH			-1
+# define NEG_NB			-2
+
+# define ARG_1			"[number_of_philosophers]"
+# define ARG_2			"[time_to_die]"
+# define ARG_3			"[time_to_eat]"
+# define ARG_4			"[time_to_sleep]"
+# define ARG_5			"[number_of_times_each_philosopher_must_eat]"
+
 # define FORK			"has taken a fork"
 # define EAT			"is eating"
 # define SLEEP			"is sleeping"
 # define THINK			"is thinking"
 # define DIE			"\033[1;31mdied\033[0m"
-# define INV_CH			-1
-# define NEG_NB			-2
 
 typedef struct s_philo
 {

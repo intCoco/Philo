@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 01:02:27 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 00:59:35 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/03 07:48:49 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ int	ft_ph_atoi(const char *str)
 	if (str[i])
 		return (INV_CH);
 	if (str[0] == '-')
-		return(NEG_NB);
+		return (NEG_NB);
 	return (ret);
 }

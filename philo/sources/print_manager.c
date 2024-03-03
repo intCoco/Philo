@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 01:05:08 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/03 08:08:02 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	inv_str(const char *str)
 {
 	while (*str)
 	{
-		if (*str != ' ' && *str != '\t' && *str != '\n' && *str != '\r' && *str != '\f' && *str != '\v')
+		if (*str != ' ' && *str != '\t' && *str != '\n' && *str != '\r'
+			&& *str != '\f' && *str != '\v')
 			return (0);
 		str++;
 	}
@@ -30,23 +31,22 @@ void	ft_print_arg_error(int ac, char **av)
 	i = 0;
 	while (++i <= 5)
 	{
-		if(i >= ac || inv_str(av[i]))
+		if (i >= ac || inv_str(av[i]))
 		{
 			if (i == 1)
-				printf("%s[number_of_philosophers]%s ", BOLD_RED, RESET);
+				printf("%s%s%s ", BOLD_RED, ARG_1, RESET);
 			if (i == 2)
-				printf("%s[time_to_die]%s ", BOLD_RED, RESET);
+				printf("%s%s%s ", BOLD_RED, ARG_2, RESET);
 			if (i == 3)
-				printf("%s[time_to_eat]%s ", BOLD_RED, RESET);
+				printf("%s%s%s ", BOLD_RED, ARG_3, RESET);
 			if (i == 4)
-				printf("%s[time_to_sleep]%s ", BOLD_RED, RESET);
+				printf("%s%s%s ", BOLD_RED, ARG_4, RESET);
 			if (i == 5)
-				printf("%s[number_of_times_each_philosopher_must_eat]%s",
-					ITALIC_TRAN, RESET);
+				printf("%s%s%s", ITALIC_TRAN, ARG_5, RESET);
 		}
-		else if (ft_ph_atoi(av[i]) == -1)
+		else if (ft_ph_atoi(av[i]) == INV_CH)
 			printf("%s\"%s\"%s ", BOLD_RED, av[i], RESET);
-		else if (ft_ph_atoi(av[i]) == -2)
+		else if (ft_ph_atoi(av[i]) == NEG_NB)
 			printf("%s%s%s ", BOLD_RED, av[i], RESET);
 		else
 			printf("%s ", av[i]);
