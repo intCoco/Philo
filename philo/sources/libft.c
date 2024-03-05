@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 01:02:27 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 07:48:49 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:19:43 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,13 @@ void	*ft_calloc(size_t c, size_t l)
 	return (s);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t l)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
 	i = 0;
-	if (l <= 0)
-		return (0);
-	while (((unsigned char *)s1)[i] == ((unsigned char *)s2)[i]
-		&& ((unsigned char *)s1)[i] && ((unsigned char *)s2)[i] && i < l - 1)
+	while (((unsigned char *)s1)[i] && ((unsigned char *)s2)[i]
+		&& ((unsigned char *)s1)[i] == ((unsigned char *)s2)[i])
 		i++;
 	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 }
@@ -52,7 +50,7 @@ void	ft_bzero(void *s, size_t len)
 		s2[i] = '\0';
 }
 
-int	ft_ph_atoi(const char *str)
+int	ft_patoi(const char *str)
 {
 	int	i;
 	int	ret;
@@ -68,7 +66,19 @@ int	ft_ph_atoi(const char *str)
 	}
 	if (str[i])
 		return (INV_CH);
-	if (str[0] == '-')
+	if (str[0] == '-' || ret == 0)
 		return (NEG_NB);
 	return (ret);
+}
+
+int	inv_str(const char *str)
+{
+	while (*str)
+	{
+		if (*str != ' ' && *str != '\t' && *str != '\n' && *str != '\r'
+			&& *str != '\f' && *str != '\v')
+			return (0);
+		str++;
+	}
+	return (1);
 }

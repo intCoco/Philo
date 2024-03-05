@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:14:34 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 01:15:26 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/05 02:04:17 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,21 @@ int	ft_progression_checker(t_data *data)
 	pthread_mutex_lock(&data->lock3);
 	while (++i <= data->nb_philo)
 	{
-		if ((ft_timestamp() - data->start) - data->philo[i].last_meal \
-			> data->time_to_die || i == data->nb_philo)
+		if (i == data->nb_philo || (ft_timestamp() - data->start) \
+			- data->philo[i].last_meal > data->time_to_die)
 		{
+			ft_usleep(1);
+			if (i < data->nb_philo)
+				ft_print_action(data, DIE, i);
+			else if (data->enhanced == TRUE)
+				ft_print_action(data, DONE, i);
 			pthread_mutex_lock(&data->lock);
 			data->running = 0;
 			pthread_mutex_unlock(&data->lock);
-			if (i < data->nb_philo)
-				ft_print_action(data, DIE, i);
 			pthread_mutex_unlock(&data->lock3);
 			return (FALSE);
 		}
-		if (data->philo[i].nb_ate <= data->nb_meal || data->nb_meal == -1)
+		if (data->philo[i].nb_ate < data->nb_meal || data->nb_meal == -1)
 			break ;
 	}
 	pthread_mutex_unlock(&data->lock3);

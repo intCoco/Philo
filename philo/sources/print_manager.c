@@ -6,30 +6,18 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 08:08:02 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/05 02:01:42 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int	inv_str(const char *str)
-{
-	while (*str)
-	{
-		if (*str != ' ' && *str != '\t' && *str != '\n' && *str != '\r'
-			&& *str != '\f' && *str != '\v')
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
-void	ft_print_arg_error(int ac, char **av)
+static void	ft_print_arg_error(int ac, char **av)
 {
 	int	i;
 
 	i = 0;
-	while (++i <= 5)
+	while (++i <= ac || i <= 5)
 	{
 		if (i >= ac || inv_str(av[i]))
 		{
@@ -44,9 +32,9 @@ void	ft_print_arg_error(int ac, char **av)
 			if (i == 5)
 				printf("%s%s%s", ITALIC_TRAN, ARG_5, RESET);
 		}
-		else if (ft_ph_atoi(av[i]) == INV_CH)
+		else if (ft_patoi(av[i]) == INV_CH && ft_strcmp(av[i], "enhanced"))
 			printf("%s\"%s\"%s ", BOLD_RED, av[i], RESET);
-		else if (ft_ph_atoi(av[i]) == NEG_NB)
+		else if (ft_patoi(av[i]) == NEG_NB || i > 5)
 			printf("%s%s%s ", BOLD_RED, av[i], RESET);
 		else
 			printf("%s ", av[i]);
@@ -55,9 +43,9 @@ void	ft_print_arg_error(int ac, char **av)
 
 int	ft_print_error(t_data *data, int ac, char **av)
 {
-	if (ft_check_error(data, ac) != 0 || ac > 6)
+	if (ft_check_error(data, ac) || (ac > 6 && ft_strcmp(av[6], "enhanced")))
 	{
-		if (ac > 6)
+		if (ac > 6 && ft_strcmp(av[6], "enhanced"))
 			printf("%sToo many%s", BOLD_RED, RESET);
 		else
 			printf("%sInvalid or missing%s", BOLD_RED, RESET);
@@ -70,13 +58,62 @@ int	ft_print_error(t_data *data, int ac, char **av)
 	return (0);
 }
 
+static void	ft_print_emoji(char *action)
+{
+	if (!ft_strcmp(action, EAT))
+		printf(" %s", EAT_EM);
+	if (!ft_strcmp(action, DIE))
+		printf(" %s", DIE_EM);
+	if (!ft_strcmp(action, OVER_EAT))
+		printf(" %s", OVER_EAT_EM);
+	if (!ft_strcmp(action, FULL))
+		printf(" %s", FULL_EM);
+}
+
+static void	ft_fancy_print(t_data *data, char *action, int i)
+{
+	static int j;
+
+	if (data->philo[i].nb_ate >= data->nb_meal && !ft_strcmp(action, EAT)
+		&& data->nb_meal != -1)
+		action = OVER_EAT;
+	ft_print_emoji(action);
+	if (!ft_strcmp(action, EAT) || !ft_strcmp(action, OVER_EAT))
+	{
+		printf(" %s%s%s%s %s", BOLD, PURPLE, action, RESET, ITALIC_TRAN);
+		if ((data->philo[i].nb_ate + 1) % 10 == 1)
+			printf("(for the %ist time)", data->philo[i].nb_ate + 1);
+		else if ((data->philo[i].nb_ate + 1) % 10 == 2)
+			printf("(for the %ind time)", data->philo[i].nb_ate + 1);
+		else if ((data->philo[i].nb_ate + 1) % 10 == 3)
+			printf("(for the %ird time)", data->philo[i].nb_ate + 1);
+		else
+			printf("(for the %ith time)", data->philo[i].nb_ate + 1);
+	}
+	else if (!ft_strcmp(action, FULL))
+		printf(" %s %s(%i/%i)", action, ITALIC_TRAN, ++j, data->nb_philo);
+	else
+		printf(" %s ", action);
+}
+
 void	ft_print_action(t_data *data, char *action, int i)
 {
 	pthread_mutex_lock(&data->speech);
-	if (ft_strncmp(action, DIE, 20) == 0 || ft_running_checker(data))
+	if (ft_running_checker(data))
 	{
-		printf("%s%-6lld%s %s%6d%s %s\n", ITALIC_BLUE, ft_timestamp()
-			- data->start, RESET, BOLD, i + 1, RESET, action);
+		if (!ft_strcmp(action, DONE) && data->enhanced == TRUE)
+			printf("%s%-11lld%s %s", ITALIC_BLUE, ft_timestamp() - data->start,
+				RESET, action);
+		else
+		{
+			printf("%s%-6lld%s %s%6d%s", ITALIC_BLUE, ft_timestamp()
+				- data->start, RESET, BOLD, i + 1, RESET);
+			if (data->enhanced == TRUE)
+				ft_fancy_print(data, action, i);
+			else
+				printf(" %s ", action);
+		}
+		printf("%s\n", RESET);
 	}
 	pthread_mutex_unlock(&data->speech);
 }

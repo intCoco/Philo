@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 20:39:29 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 08:09:25 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:30:52 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# define PURPLE			"\033[35m"
+# define GREEN			"\033[32m"
 # define BOLD_RED		"\033[1;31m"
-# define RESET			"\033[0m"
-# define ITALIC_BLUE	"\033[3;36m"
+# define ITALIC_BLUE	"\033[3;34m"
 # define ITALIC_TRAN	"\033[2;3m"
 # define ITALIC			"\033[3m"
 # define BOLD			"\033[1m"
+# define RESET			"\033[0m"
 
 # define TRUE			1
 # define FALSE			0
@@ -46,6 +48,14 @@
 # define SLEEP			"is sleeping"
 # define THINK			"is thinking"
 # define DIE			"\033[1;31mdied\033[0m"
+# define OVER_EAT		"\033[1;33mis pigging out\033[0m"
+# define FULL			"\033[1;32mis full\033[0m"
+# define DONE			"\033[1;32mEveryone is done eating\033[0m"
+
+# define EAT_EM			"🍝"
+# define DIE_EM			"💀"
+# define OVER_EAT_EM	"🐷"
+# define FULL_EM		"🤰"
 
 typedef struct s_philo
 {
@@ -59,6 +69,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	bool			running;
+	bool			enhanced;
 	int				ended;
 	int				nb_philo;
 	int				nb_meal;
@@ -74,12 +85,13 @@ typedef struct s_data
 }					t_data;
 
 void		ft_bzero(void *s, size_t len);
-int			ft_ph_atoi(const char *str);
+int			ft_patoi(const char *str);
 void		*ft_calloc(size_t c, size_t l);
+int			inv_str(const char *str);
 long long	ft_timestamp(void);
 void		ft_usleep(int time_to_wait);
 void		ft_free(t_data *data);
-int			ft_strncmp(const char *s1, const char *s2, size_t l);
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_running_checker(t_data *data);
 void		ft_print_action(t_data *data, char *action, int i);
 int			ft_complete_av(int ac, char **av);

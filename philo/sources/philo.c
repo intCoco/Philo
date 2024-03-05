@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 19:44:14 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/03 01:21:18 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:04:41 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,16 @@ void	ft_eat(t_data *data, int pid)
 {
 	if (!ft_fork_picking(data, pid))
 		return ;
-	ft_print_action(data, EAT, pid);
 	pthread_mutex_lock(&data->lock3);
 	data->philo[pid].last_meal = ft_timestamp() - data->start;
+	pthread_mutex_unlock(&data->lock3);
+	ft_print_action(data, EAT, pid);
+	ft_usleep(data->time_to_eat);
+	pthread_mutex_lock(&data->lock3);
 	data->philo[pid].nb_ate++;
 	pthread_mutex_unlock(&data->lock3);
-	ft_usleep(data->time_to_eat);
+	if (data->philo[pid].nb_ate == data->nb_meal && data->enhanced == TRUE)
+		ft_print_action(data, FULL, pid);
 	pthread_mutex_unlock(&data->philo[pid].l_fork);
 	pthread_mutex_unlock(data->philo[pid].r_fork);
 }
