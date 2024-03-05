@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 21:16:23 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/05 02:01:42 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/05 02:14:17 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_print_emoji(char *action)
 
 static void	ft_fancy_print(t_data *data, char *action, int i)
 {
-	static int j;
+	static int	j;
 
 	if (data->philo[i].nb_ate >= data->nb_meal && !ft_strcmp(action, EAT)
 		&& data->nb_meal != -1)

@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/05 02:06:03 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/05 02:13:17 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,8 @@ ${BLUE}This program simulates the dining philosophers problem.${RESET}\n\n\
 To compile the program, use the command:\n\
     ${PURPLE}make${RESET}\n\n\
 To run the program, use the command:\n\
-    ${PURPLE}./philosophers${RESET} [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] ${TRANS}${ITALIC}[number_of_times_each_philosopher_must_eat]${RESET}\n\
-    	(where each argument is a strictly positive integer)\n\n\
+    ${PURPLE}./philosophers${RESET} [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] ${TRANS}${ITALIC}[number_of_times_each_philosopher_must_eat]\n\
+    	(you can add \"enhanced\" as an extra last parameter to run the program with a better looking display)${RESET}\n\n\
 To clean the generated files, use the command:\n\
     ${PURPLE}make clean${RESET}\n\n\
 To clean the generated files and the executable, use the command:\n\
